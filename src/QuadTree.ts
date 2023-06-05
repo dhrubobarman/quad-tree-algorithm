@@ -160,6 +160,8 @@ export class QuadTree {
     points: boolean = true
   ) {
     if (line) {
+      ctx.save();
+      ctx.lineWidth = 0.1;
       ctx.beginPath();
       ctx.rect(
         this.boundry.x - this.boundry.w,
@@ -168,6 +170,7 @@ export class QuadTree {
         this.boundry.h * 2
       );
       ctx.stroke();
+      ctx.restore();
     }
     if (points) {
       for (let p of this.points) {

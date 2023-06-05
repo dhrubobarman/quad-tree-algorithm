@@ -49,9 +49,12 @@ noiseAlgorithmInput.addEventListener("change", (e) => {
 });
 pointCount.addEventListener("input", (e) => {
   const target = e.target as HTMLInputElement;
-  const value = target.value;
-  totalPoints.innerText = `${value}p`;
-  quadTree.changeMaxPoints(Number(value));
+  const value = Number(target.value);
+  totalPoints.innerHTML =
+    value < 600
+      ? `<span >${value}p</span>`
+      : `<span style="color: red">${value}p</span>`;
+  quadTree.changeMaxPoints(value);
 });
 
 const viewFinder = new Rectangle(300, 200, 50, 50);
