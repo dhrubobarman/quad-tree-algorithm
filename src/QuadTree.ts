@@ -1,6 +1,6 @@
 import { Point } from "./Point";
 import { Rectangle } from "./Rectangle";
-import { point } from "./helperFunctions";
+import { point, randomGaussian, randomInt } from "./helperFunctions";
 
 export class QuadTree {
   boundry: Rectangle;
@@ -12,8 +12,16 @@ export class QuadTree {
   bottomLeft: QuadTree | null;
   devided: boolean;
   isMousePressed: boolean;
+  maxPoints: number;
+  distributionAlgo: "gaussian" | "uniform";
+  canvas: HTMLCanvasElement;
 
-  constructor(boundry: Rectangle, n: number = 4) {
+  constructor(
+    boundry: Rectangle,
+    n: number = 4,
+    maxPoints = 100,
+    canvas: HTMLCanvasElement
+  ) {
     this.boundry = boundry;
     this.capacity = n;
     this.points = [];
@@ -23,6 +31,10 @@ export class QuadTree {
     this.bottomRight = null;
     this.bottomLeft = null;
     this.isMousePressed = false;
+    this.maxPoints = maxPoints;
+    this.distributionAlgo = "uniform";
+    this.canvas = canvas;
+    this._createPoints();
   }
 
   subdivide() {
@@ -32,10 +44,25 @@ export class QuadTree {
     const br = new Rectangle(x + w / 2, y + h / 2, w / 2, h / 2);
     const bl = new Rectangle(x - w / 2, y + h / 2, w / 2, h / 2);
 
-    this.topRight = new QuadTree(tr, this.capacity);
-    this.topLeft = new QuadTree(tl, this.capacity);
-    this.bottomRight = new QuadTree(br, this.capacity);
-    this.bottomLeft = new QuadTree(bl, this.capacity);
+    this.topRight = new QuadTree(
+      tr,
+      this.capacity,
+      this.maxPoints,
+      this.canvas
+    );
+    this.topLeft = new QuadTree(tl, this.capacity, this.maxPoints, this.canvas);
+    this.bottomRight = new QuadTree(
+      br,
+      this.capacity,
+      this.maxPoints,
+      this.canvas
+    );
+    this.bottomLeft = new QuadTree(
+      bl,
+      this.capacity,
+      this.maxPoints,
+      this.canvas
+    );
     this.devided = true;
   }
 
@@ -82,6 +109,49 @@ export class QuadTree {
       );
     }
     return pointsInRange;
+  }
+
+  // extra methods for visualization
+  changeMaxPoints(maxPoints: number) {
+    this.maxPoints = maxPoints;
+    this.reset();
+    this._createPoints();
+  }
+
+  changeDistributionAlgo(algo: "gaussian" | "uniform") {
+    this.distributionAlgo = algo;
+    this.reset();
+    this._createPoints();
+  }
+
+  private _createPoints() {
+    if (this.distributionAlgo === "gaussian") {
+      for (let i = 0; i < this.maxPoints; i++) {
+        const p = new Point(
+          randomGaussian(this.canvas.width / 2, this.canvas.height / 10),
+          randomGaussian(this.canvas.width / 2, this.canvas.height / 10)
+        );
+        this.insert(p);
+      }
+    } else {
+      for (let i = 0; i < this.maxPoints; i++) {
+        const p = new Point(
+          randomInt(this.canvas.width),
+          randomInt(this.canvas.height)
+        );
+        this.insert(p);
+      }
+    }
+  }
+
+  reset() {
+    this.points = [];
+    this.devided = false;
+    this.topRight = null;
+    this.topLeft = null;
+    this.bottomRight = null;
+    this.bottomLeft = null;
+    return;
   }
 
   show(
