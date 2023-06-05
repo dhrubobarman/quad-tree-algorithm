@@ -1,7 +1,7 @@
-
-
+### View this [Project](https://quad-tree-algorithm.netlify.app/) on netlify
 # Quad Tree Algorithm
 This project is about implementing and visualizing a quad tree data structure. A quad tree is a tree that divides a two-dimensional space into four quadrants recursively. It can be used for various applications such as image compression, spatial indexing, collision detection, and more.
+
 
 <h2>Features</h2>
 <img src='https://github.com/dhrubobarman/quad-tree-algorithm/blob/main/public/preview2.png?raw=true' alt='preview2' />
