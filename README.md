@@ -1,14 +1,11 @@
 
 
 # Quad Tree Algorithm
-![Preview 1](https://github.com/dhrubobarman/quad-tree-algorithm/blob/main/public/preview.png?raw=true)
-# 
-
 This project is about implementing and visualizing a quad tree data structure. A quad tree is a tree that divides a two-dimensional space into four quadrants recursively. It can be used for various applications such as image compression, spatial indexing, collision detection, and more.
 #
-![Preview 2](https://github.com/dhrubobarman/quad-tree-algorithm/blob/main/public/preview2.png?raw=true)
-<h2>Features</h2>
 
+<h2>Features</h2>
+<img src='https://github.com/dhrubobarman/quad-tree-algorithm/blob/main/public/preview2.png?raw=true' alt='preview2' />
 <ul>
 <li>Create and manipulate quad trees from points</li>
 <li>Visualize quad trees with different levels of detail</li>
@@ -39,5 +36,9 @@ For more information, please visit <a href="https://vitejs.dev/" target='_blank'
 <li><a href="https://www.rastertek.com/tertut05.html" class="ac-anchor" target="_blank" h="ID=SERP,5035.1">Tutorial 5: Quad Trees - RasterTek</a></li>
 </ul>
 </div>
+
+<img src='https://github.com/dhrubobarman/quad-tree-algorithm/blob/main/public/preview.png?raw=true' alt='preview1' />
+
+
 
 
