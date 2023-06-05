@@ -54,17 +54,31 @@
               checked
             />
           </label>
+          <div class="form-control w-full max-w-xs my-5">
+            <label class="label" for="pointCount">
+              <span class="label-text">Total Points:</span
+              ><span id="totalPoints">300p</span>
+            </label>
+            <input
+              id="pointCount"
+              type="range"
+              min="100"
+              max="1000"
+              value="300"
+              class="range range-primary"
+            />
+          </div>
           <div class="form-control w-full max-w-xs">
             <label class="label" for="noiseAlgo">
-              <span class="label-text">Pick the Noise Algorithm</span>
+              <span class="label-text">Pick Points distrubution Algorithm</span>
             </label>
             <select
               name="noiseAlgo"
               id="noiseAlgo"
               class="select select-bordered w-full max-w-xs"
             >
-              <option value="gaussian" selected>Gaussian</option>
-              <option value="normal">Normal</option>
+              <option value="uniform" selected>Uniform</option>
+              <option value="gaussian">Gaussian</option>
             </select>
           </div>
         </div>

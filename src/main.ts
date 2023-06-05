@@ -1,8 +1,7 @@
 import "./style.css";
 import { QuadTree } from "./QuadTree";
 import { Rectangle } from "./Rectangle";
-import { point, randomGaussian, randomInt } from "./helperFunctions";
-import { Point } from "./Point";
+import { point } from "./helperFunctions";
 import { showFps } from "./helperFunctions";
 
 // Controls
@@ -21,6 +20,8 @@ const showFPSInput = document.querySelector(
 const noiseAlgorithmInput = document.querySelector(
   "#noiseAlgo"
 ) as HTMLSelectElement;
+const pointCount = document.querySelector("#pointCount") as HTMLInputElement;
+const totalPoints = document.querySelector("#totalPoints") as HTMLSpanElement;
 
 // Canvas setup
 const canvas = document.querySelector("canvas")!;
@@ -39,44 +40,28 @@ const boundry = new Rectangle(
   canvas.width * 0.5,
   canvas.height * 0.5
 );
-let qt = new QuadTree(boundry, 4);
-
-for (let i = 0; i < 100; i++) {
-  const p = new Point(
-    randomGaussian(canvas.width / 2, canvas.height / 10),
-    randomGaussian(canvas.width / 2, canvas.height / 10)
-  );
-  qt.insert(p);
-}
+const quadTree = new QuadTree(boundry, 4, 300, canvas);
 
 noiseAlgorithmInput.addEventListener("change", (e) => {
-  qt = new QuadTree(boundry, 4);
   const target = e.target as HTMLSelectElement;
+  const value = target.value as "gaussian" | "uniform";
+  quadTree.changeDistributionAlgo(value);
+});
+pointCount.addEventListener("input", (e) => {
+  const target = e.target as HTMLInputElement;
   const value = target.value;
-  if (value === "gaussian") {
-    for (let i = 0; i < 100; i++) {
-      const p = new Point(
-        randomGaussian(canvas.width / 2, canvas.height / 10),
-        randomGaussian(canvas.width / 2, canvas.height / 10)
-      );
-      qt.insert(p);
-    }
-  } else {
-    for (let i = 0; i < 100; i++) {
-      const p = new Point(randomInt(canvas.width), randomInt(canvas.height));
-      qt.insert(p);
-    }
-  }
+  totalPoints.innerText = `${value}p`;
+  quadTree.changeMaxPoints(Number(value));
 });
 
-const range = new Rectangle(300, 200, 50, 50);
+const viewFinder = new Rectangle(300, 200, 50, 50);
 
 let currentTime = 0;
 function animate(time: number = 0) {
   const deltaTime = time - currentTime;
   currentTime = time;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  controlSettings(ctx, canvas, deltaTime, range);
+  controlSettings(ctx, canvas, deltaTime, viewFinder);
   requestAnimationFrame(animate);
 }
 animate();
@@ -105,10 +90,9 @@ function controlSettings(
   } else {
     subdevideLineVisible = false;
   }
-  qt.show(ctx, subdevideLineVisible, dotsVisible);
+  quadTree.show(ctx, subdevideLineVisible, dotsVisible);
   if (mouseControlInput.checked) {
-    const points = qt.query(range) || [{ x: 0, y: 0 }];
-
+    const points = quadTree.query(range) || [];
     for (let i = 0; i < points.length; i++) {
       ctx.save();
       ctx.strokeStyle = "red";
