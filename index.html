@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quad Tree Algorithm</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@3.0.3/dist/full.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <canvas id="canvas1"></canvas>
+    <div class="absolute right-5 top-5">
+      <div class="collapse shadow-xl w-80 bg-base-100 collapse-arrow">
+        <input type="checkbox" id="accordionCheckbox" checked />
+        <div class="collapse-title text-xl font-medium border-b">Settings</div>
+        <div class="collapse-content max-h-0">
+          <label class="cursor-pointer label">
+            <span class="label-text text-gray-200">Mouse</span>
+            <input
+              type="checkbox"
+              class="toggle toggle-secondary"
+              checked
+              id="mouseControlInput"
+            />
+          </label>
+          <label class="cursor-pointer label">
+            <span class="label-text text-gray-200">Show Points</span>
+            <input
+              type="checkbox"
+              class="toggle toggle-secondary"
+              checked
+              id="showPointsInput"
+            />
+          </label>
+          <label class="cursor-pointer label">
+            <span class="label-text text-gray-200">Show Subdevided lines</span>
+            <input
+              type="checkbox"
+              class="toggle toggle-secondary"
+              id="showSubdevidedLinesInput"
+            />
+          </label>
+          <label class="cursor-pointer label">
+            <span class="label-text text-gray-200">Show FPS</span>
+            <input
+              type="checkbox"
+              class="toggle toggle-secondary"
+              id="showFPSInput"
+              checked
+            />
+          </label>
+          <div class="form-control w-full max-w-xs">
+            <label class="label" for="noiseAlgo">
+              <span class="label-text">Pick the Noise Algorithm</span>
+            </label>
+            <select
+              name="noiseAlgo"
+              id="noiseAlgo"
+              class="select select-bordered w-full max-w-xs"
+            >
+              <option value="gaussian" selected>Gaussian</option>
+              <option value="normal">Normal</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
